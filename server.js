@@ -1,7 +1,10 @@
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
+import http from 'http';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const port = process.env.PORT || 3000;
 const distDir = path.join(__dirname, 'dist');
 
@@ -31,7 +34,6 @@ const server = http.createServer((req, res) => {
       stream.pipe(res);
       return;
     }
-    // SPA fallback to index.html
     const indexPath = path.join(distDir, 'index.html');
     if (fs.existsSync(indexPath)) {
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
