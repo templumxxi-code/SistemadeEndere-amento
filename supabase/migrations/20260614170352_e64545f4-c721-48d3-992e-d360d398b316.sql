@@ -1,0 +1,21 @@
+ALTER TABLE public.warehouses DROP CONSTRAINT warehouses_code_key;
+ALTER TABLE public.warehouses ADD CONSTRAINT warehouses_owner_code_unique UNIQUE (owner_user_id, code);
+ALTER TABLE public.skus DROP CONSTRAINT skus_code_key;
+ALTER TABLE public.skus ADD CONSTRAINT skus_owner_code_unique UNIQUE (owner_user_id, code);
+
+DROP POLICY "Users manage own warehouses" ON public.warehouses;
+CREATE POLICY "Company users manage warehouses" ON public.warehouses FOR ALL TO authenticated USING (auth.uid() IS NOT NULL) WITH CHECK (auth.uid() IS NOT NULL);
+DROP POLICY "Users manage own floor plans" ON public.floor_plans;
+CREATE POLICY "Company users manage floor plans" ON public.floor_plans FOR ALL TO authenticated USING (auth.uid() IS NOT NULL) WITH CHECK (auth.uid() IS NOT NULL);
+DROP POLICY "Users manage own map zones" ON public.map_zones;
+CREATE POLICY "Company users manage map zones" ON public.map_zones FOR ALL TO authenticated USING (auth.uid() IS NOT NULL) WITH CHECK (auth.uid() IS NOT NULL);
+DROP POLICY "Users manage own aisles" ON public.aisles;
+CREATE POLICY "Company users manage aisles" ON public.aisles FOR ALL TO authenticated USING (auth.uid() IS NOT NULL) WITH CHECK (auth.uid() IS NOT NULL);
+DROP POLICY "Users manage own racks" ON public.racks;
+CREATE POLICY "Company users manage racks" ON public.racks FOR ALL TO authenticated USING (auth.uid() IS NOT NULL) WITH CHECK (auth.uid() IS NOT NULL);
+DROP POLICY "Users manage own positions" ON public.storage_positions;
+CREATE POLICY "Company users manage positions" ON public.storage_positions FOR ALL TO authenticated USING (auth.uid() IS NOT NULL) WITH CHECK (auth.uid() IS NOT NULL);
+DROP POLICY "Users manage own skus" ON public.skus;
+CREATE POLICY "Company users manage skus" ON public.skus FOR ALL TO authenticated USING (auth.uid() IS NOT NULL) WITH CHECK (auth.uid() IS NOT NULL);
+DROP POLICY "Users manage own assignments" ON public.sku_assignments;
+CREATE POLICY "Company users manage assignments" ON public.sku_assignments FOR ALL TO authenticated USING (auth.uid() IS NOT NULL) WITH CHECK (auth.uid() IS NOT NULL);
